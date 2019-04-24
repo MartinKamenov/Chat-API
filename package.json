@@ -1,0 +1,38 @@
+{
+  "name": "chat-api",
+  "version": "1.0.0",
+  "description": "Backend which supports web-socket protocol",
+  "main": "./server.js",
+  "dependencies": {
+    "@types/cors": "^2.8.4",
+    "@types/express": "^4.16.1",
+    "@types/express-ws": "^3.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-ws": "^4.0.0",
+    "ws": "^6.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./src/server.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartinKamenov/Chat-API.git"
+  },
+  "keywords": [
+    "api",
+    "backend",
+    "node",
+    "js",
+    "javascript",
+    "web-sockets"
+  ],
+  "author": "Martin Kamenov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MartinKamenov/Chat-API/issues"
+  },
+  "homepage": "https://github.com/MartinKamenov/Chat-API#readme"
+}
