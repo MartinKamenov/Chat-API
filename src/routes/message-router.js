@@ -1,13 +1,17 @@
 const enableWs = require('express-ws');
+const data = [];
 
 const attach = (app) => {
     enableWs(app);
+    const connections = [];
     app.ws('/echo', (ws, req) => {
-        ws.on('connect', () => {
-          ws.send('Connected');
-        });
+        connections.push(ws);
         ws.on('message', msg => {
-            ws.send(msg);
+            data.push(msg);
+
+            for(var i = 0; i < connections.length; i++) {
+                connections[i].send(data[data.length - 1]);
+            }
         });
     
         ws.on('close', () => {
