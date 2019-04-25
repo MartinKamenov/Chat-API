@@ -9,12 +9,13 @@ const attach = (app) => {
         ws.on('message', msg => {
             data.push(msg);
 
-            for(var i = 0; i < connections.length; i++) {
-                connections[i].send(data[data.length - 1]);
-            }
+            connections.forEach((connection) => {
+                connection.send(data[data.length - 1]);
+            });
         });
     
         ws.on('close', () => {
+            connections.splice(connections.indexOf(ws), 1);
             console.log('WebSocket was closed');
         });
     });
