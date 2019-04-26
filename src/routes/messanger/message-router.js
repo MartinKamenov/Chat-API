@@ -1,4 +1,5 @@
 const enableWs = require('express-ws');
+const controller = require('./message-controller');
 const data = [];
 
 const attach = (app) => {
