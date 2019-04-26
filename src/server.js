@@ -5,11 +5,13 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 const messageRoute = require('./routes/message-router');
+const setupConfiguration = require('./setup/setupConfiguration');
+const database = require('./database/connector');
 
-const start = () => {
+const start = (setupConfiguration) => {
     messageRoute(app);
 
-    app.listen(5000, () => console.log('Magic is running on 5000'));
+    app.listen(setupConfiguration.port, setupConfiguration.startCallback());
 };
 
-start();
+start(setupConfiguration);
