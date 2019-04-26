@@ -5,7 +5,7 @@ class Database {
     constructor(connectionString) {
         this.connectionString = connectionString;
         this.connection = new Promise((resolve) => {
-            resolve(MongoClient.connect(this.connectionString, { useNewUrlParser: true }));
+            resolve(MongoClient.connect(this.connectionString));
         });
     }
 
