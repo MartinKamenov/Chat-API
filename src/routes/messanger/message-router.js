@@ -1,22 +1,18 @@
 const enableWs = require('express-ws');
 const controller = require('./message-controller');
-const data = [];
 
-const attach = (app) => {
+const attach = (app, messengerRepository) => {
     enableWs(app);
-    const connections = [];
-    app.ws('/echo', (ws, req) => {
-        connections.push(ws);
-        ws.on('message', msg => {
-            data.push(msg);
-
-            connections.forEach((connection) => {
-                connection.send(data[data.length - 1]);
-            });
+    controller.addRepository(messengerRepository);
+    app.ws('/messenger/:id', async (ws, req) => {
+        const id = req.params.id;
+        controller.addConnection(ws);
+        ws.on('message', async (msg) => {
+            await controller.addMessage(id, 'Pesho', msg);
         });
     
         ws.on('close', () => {
-            connections.splice(connections.indexOf(ws), 1);
+            controller.removeConnection(ws);
             console.log('WebSocket was closed');
         });
     });

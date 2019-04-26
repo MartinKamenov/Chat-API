@@ -23,6 +23,7 @@
   "scripts": {
     "start": "node ./src/server.js",
     "lint": "eslint ./src",
+    "lintfix": "eslint ./src --fix",
     "test": "test"
   },
   "repository": {
