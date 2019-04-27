@@ -9,8 +9,15 @@ const attach = (app, userRepository) => {
             const users = await controller.showAllUsers(userRepository);
             res.send(users);
         })
-        .post('/login', (req, res) => {
-            res.send('login');
+        .post('/login', passport.authenticate('local', { failureRedirect: '/login' }),
+            function(req, res) {
+                res.send('logged');
+            }
+        )
+        .post('/register', passport.authenticate('local', {
+            failureRedirect: '/auth/register'
+        }), function(req, res) {
+            res.send('registered');
         })
         .post('/register', async(req, res) => {
             const body = req.body;
