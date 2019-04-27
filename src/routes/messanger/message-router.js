@@ -13,7 +13,6 @@ const attach = (app, messengerRepository) => {
     
         ws.on('close', () => {
             controller.removeConnection(ws);
-            console.log('WebSocket was closed');
         });
     });
 };

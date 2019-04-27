@@ -17,8 +17,7 @@ const controller = {
     },
     addMessage: async function(id, username, message) {
         if(!messengers[id]) {
-            //await this.addMessenger(id);
-            messengers[id] = [];
+            await this.addMessenger(id);
         }
 
         messengers[id].push(username, message);
