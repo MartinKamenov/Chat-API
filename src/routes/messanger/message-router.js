@@ -1,8 +1,9 @@
 const enableWs = require('express-ws');
 const controller = require('./message-controller');
-
+const { Router } = require('express');
 
 const attach = (app, messengerRepository) => {
+    const router = new Router();
     enableWs(app);
     app.ws('/messenger/:id', async (ws, req) => {
         const id = req.params.id;
@@ -18,6 +19,14 @@ const attach = (app, messengerRepository) => {
             controller.removeConnection(id, ws);
         });
     });
+
+    router.get('/messenger/:id', async (req, res) => {
+        const id = req.params.id;
+        const messages = await controller.getAllMesages(id, messengerRepository);
+        res.send(messages);
+    });
+
+    app.use('/', router);
 };
 
 module.exports = attach;

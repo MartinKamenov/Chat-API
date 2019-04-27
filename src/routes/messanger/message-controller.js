@@ -3,6 +3,10 @@ const Messenger = require('../../models/Messenger');
 const uuid = require('uuid');
 
 const controller = {
+    getAllMesages: async function(id, messengerRepository) {
+        const messenger = await this.getMessenger(id, messengerRepository);
+        return messenger.messages;
+    },
     getMessenger: async function(id, messengerRepository) {
         const messengers = await messengerRepository.findMessengerById(id);
         if(!messengers.length) {
@@ -32,7 +36,6 @@ const controller = {
     },
     addMessage: async function(id, username, message) {
         this.sendMessage(id, {username, message});
-
     },
     sendMessage: function(id, messageObject) {
         const message = messageObject.message;
