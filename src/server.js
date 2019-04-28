@@ -16,10 +16,11 @@ const authConfig = require('./setup/auth.config');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
-const userRoute = require('./routes/users');
-const messageRoute = require('./routes/messanger');
 const sessionSecret = process.env.sessionSecret || 
     require('../../credentials/credentialManager').sessionSecret;
+
+const userRoute = require('./routes/users/user-route');
+const messageRoute = require('./routes/messanger/message-router');
 
 app.use(cookieParser('secret'));
 app.use(session({
