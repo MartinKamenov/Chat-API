@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const controller = require('./user-controller');
+const passport = require('passport');
 
 const attach = (app, userRepository) => {
     const router = new Router();
@@ -11,12 +12,14 @@ const attach = (app, userRepository) => {
         })
         .post('/login', passport.authenticate('local', { 
                 successRedirect: '/login/successfull',
-                failureRedirect: '/login/unsuccessfull', 
+                failureRedirect: '/login/unsuccessfull',
+                failureFlash: true
             })
         )
         .post('/register', passport.authenticate('local', { 
             successRedirect: '/register/successfull',
-            failureRedirect: '/register/unsuccessfull', 
+            failureRedirect: '/register/unsuccessfull',
+            failureFlash: true
         }))
         .get('/login/successfull', (req, res) => {
             res.send('Successfull login');
@@ -29,16 +32,6 @@ const attach = (app, userRepository) => {
         })
         .get('/register/unsuccessfull', (req, res) => {
             res.send('Unsuccessfull register');
-        })
-        .post('/register', async(req, res) => {
-            const body = req.body;
-            const requestObject = {
-                email: body.email,
-                username: body.username,
-                password: body.password
-            };
-            const response = await controller.createUser(requestObject, userRepository);
-            return response;
         });
 
     app.use('/', router);

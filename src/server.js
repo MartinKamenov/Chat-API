@@ -15,6 +15,8 @@ const messengerRepository = new MessengerRepository(database, 'messengers');
 const authConfig = require('./setup/auth.config');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
+const bodyParser = require('body-parser');
 
 const sessionSecret = process.env.sessionSecret || 
     require('../../credentials/credentialManager').sessionSecret;
@@ -22,22 +24,26 @@ const sessionSecret = process.env.sessionSecret ||
 const userRoute = require('./routes/users/user-route');
 const messageRoute = require('./routes/messanger/message-router');
 
-app.use(cookieParser('secret'));
-app.use(session({
-    secret: sessionSecret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: 600000000,
-    },
-}));
-
 const start = (setupConfiguration) => {
+    app.use(bodyParser.urlencoded({ extended: true }));
+
+    //app.use(bodyParser.json());
+    app.use(cookieParser('secret'));
+    app.use(session({
+        secret: sessionSecret,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 600000000,
+        },
+    }));
+    app.use(flash());
+
     authConfig(app, userRepository);
     userRoute(app, userRepository);
     messageRoute(app, messengerRepository);
 
-    app.listen(setupConfiguration.port, setupConfiguration.startCallback());
+    app.listen(setupConfiguration.port, '192.168.0.127', setupConfiguration.startCallback());
 };
 
 start(setupConfiguration);
