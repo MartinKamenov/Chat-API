@@ -43,7 +43,7 @@ const start = (setupConfiguration) => {
     userRoute(app, userRepository);
     messageRoute(app, messengerRepository);
 
-    app.listen(setupConfiguration.port, '192.168.0.127', setupConfiguration.startCallback());
+    app.listen(setupConfiguration.port, setupConfiguration.startCallback());
 };
 
 start(setupConfiguration);
