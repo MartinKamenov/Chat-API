@@ -17,8 +17,7 @@ function validateUsername(username) {
 const configAuth = (app, userRepository, registeredUser) => {
     passport.use(new Strategy({
             passReqToCallback: true,
-        },
-        (req, username, password, done) => {
+        }, (req, username, password, done) => {
             const email = req.body.email;
 
             if (!email) {
