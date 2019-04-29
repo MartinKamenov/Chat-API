@@ -15,6 +15,10 @@ class UserRepository {
         return this.database.find(this.collectionName, {username});
     }
 
+    findUserByParams(params) {
+        return this.database.find(this.collectionName, params);
+    }
+
     updateUser(username, newUser) {
         return this.database.update(this.collectionName, {username}, newUser);
     }
