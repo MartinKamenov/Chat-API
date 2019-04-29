@@ -11,6 +11,8 @@ const userRepository = new UserRepository(database, 'users');
 const MessengerRepository = require('./models/repositories/MessengerRepository');
 const messengerRepository = new MessengerRepository(database, 'messengers');
 
+const appConfig = require('./config/auth.config')(app);
+
 const userRoute = require('./routes/users/user-route');
 const messageRoute = require('./routes/messanger/message-router');
 
