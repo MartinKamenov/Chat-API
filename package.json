@@ -4,8 +4,6 @@
   "description": "Backend which supports web-socket protocol",
   "main": "./server.js",
   "dependencies": {
-    "@types/body-parser": "^1.17.0",
-    "@types/connect-flash": "0.0.34",
     "@types/cookie-parser": "^1.4.1",
     "@types/cors": "^2.8.4",
     "@types/eslint": "^4.16.6",
