@@ -11,14 +11,14 @@ const attach = (app, userRepository) => {
             res.send(users);
         })
         .post('/login', passport.authenticate('local', { 
-                successRedirect: '/login/successfull',
-                failureRedirect: '/login/unsuccessfull',
-                failureFlash: true
-            })
+            successRedirect: '/auth/login/successfull',
+            failureRedirect: '/auth/login/unsuccessfull',
+            failureFlash: true
+        })
         )
-        .post('/register', passport.authenticate('local', { 
-            successRedirect: '/register/successfull',
-            failureRedirect: '/register/unsuccessfull',
+        .post('/register', passport.authenticate('local', {
+            successRedirect: '/auth/register/successfull',
+            failureRedirect: '/auth/register/unsuccessfull',
             failureFlash: true
         }))
         .get('/login/successfull', (req, res) => {
@@ -34,7 +34,7 @@ const attach = (app, userRepository) => {
             res.send('Unsuccessfull register');
         });
 
-    app.use('/', router);
+    app.use('/auth', router);
 };
 
 module.exports = attach;

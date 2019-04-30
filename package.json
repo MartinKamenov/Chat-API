@@ -31,7 +31,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node ./src/server.js",
+    "start": "nodemon ./src/server.js",
     "lint": "eslint ./src",
     "lintfix": "eslint ./src --fix",
     "test": "test"
