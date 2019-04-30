@@ -32,7 +32,7 @@ const configAuth = (app, userRepository) => {
     passport.use(new Strategy({
         passReqToCallback: true,
     }, (req, username, password, done) => {
-        const email = req.body.email;
+        const email = req.query.email;
 
         if (!email) {
             // This is the Login, because no e-mail is sent
@@ -59,7 +59,7 @@ const configAuth = (app, userRepository) => {
         // Register module
         // const username = req.body.username;
         // const password = req.body.password;
-        const repeatpassword = req.body.password_confirm;
+        const repeatpassword = req.query.password_confirm;
         if (!password || !username || !email || !repeatpassword) {
             return done(null, false, {
                 message: ALL_FIELDS_ARE_REQUIRED_MESSAGE,
