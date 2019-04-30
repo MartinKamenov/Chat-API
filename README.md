@@ -1,5 +1,5 @@
 # Chat-API
-The backend for basic chat
+RestFul-API which supports web-scokets for live connections between client and server
 
 ## 1. Models
 ### User 
@@ -37,5 +37,15 @@ The backend for basic chat
 - email(string: email of authenticating user used in registration routh)
 
 5. Example
-- Request: (GET)[URL][/login?username=martin&password=kamenov]
+- Request: (GET)[URL][/auth/login?username=martin&password=kamenov]
 - Response: "Successfull login"
+
+### WebSocket connection [ws:[URL]/messenger/:id]
+1. [WS connection] request type
+
+2. Description: Add user to messenger if there is logged one
+
+3. Return type: String(message as string if new message is recieved)
+
+4. Query object:
+- message(string: message which would be send to api)
