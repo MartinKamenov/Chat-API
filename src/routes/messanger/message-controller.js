@@ -18,7 +18,7 @@ const controller = {
         return messengers[0];
     },
     addMessageToDatabase: async function(id, messenger, messengerRepository, messageObject) {
-        messenger.messages.push(messageObject.message);
+        messenger.messages.push(messageObject);
 
         await messengerRepository.updateMessenger(id, messenger);
     },
