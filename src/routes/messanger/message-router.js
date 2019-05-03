@@ -1,18 +1,24 @@
 const enableWs = require('express-ws');
 const controller = require('./message-controller');
 const { Router } = require('express');
+const Message = require('../../models/Message');
+const uuid = require('uuid');
 
 const attach = (app, messengerRepository) => {
     const router = new Router();
     enableWs(app);
     app.ws('/messenger/:id', async (ws, req) => {
+        if(!req.user) {
+            return;
+        }
         const id = req.params.id;
         controller.addConnection(id, ws);
         const messenger = await controller.getMessenger(id, messengerRepository);
         ws.on('message', async (msg) => {
-            await controller.addMessage(id, 'Pesho', msg);
+            const message = new Message(uuid.v1, msg, req.user.username, new Date());
+            await controller.addMessage(id, message);
             controller
-                .addMessageToDatabase(id, messenger, messengerRepository, { username: 'Pesho', message: msg });
+                .addMessageToDatabase(id, messenger, messengerRepository, message);
         });
     
         ws.on('close', () => {

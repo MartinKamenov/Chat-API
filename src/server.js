@@ -34,7 +34,7 @@ const start = (setupConfiguration) => {
         resave: false,
         saveUninitialized: true,
         cookie: {
-            maxAge: 600000000,
+            maxAge: 600000000
         },
     }));
     app.use(flash());
@@ -43,7 +43,7 @@ const start = (setupConfiguration) => {
     userRoute(app, userRepository);
     messageRoute(app, messengerRepository);
 
-    app.listen(setupConfiguration.port, setupConfiguration.startCallback());
+    app.listen(setupConfiguration.port, '192.168.43.181', setupConfiguration.startCallback());
 };
 
 start(setupConfiguration);

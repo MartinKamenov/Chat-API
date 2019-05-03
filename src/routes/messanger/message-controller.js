@@ -34,11 +34,11 @@ const controller = {
     removeConnection: function(id, connection) {
         connections[id].splice(connections[id].indexOf(connection), 1);
     },
-    addMessage: async function(id, username, message) {
-        this.sendMessage(id, {username, message});
+    addMessage: async function(id, message) {
+        this.sendMessage(id, message);
     },
     sendMessage: function(id, messageObject) {
-        const message = messageObject.message;
+        const message = JSON.stringify(messageObject);
         connections[id].forEach((connection) => {
             connection.send(message);
         });
