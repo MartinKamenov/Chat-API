@@ -93,7 +93,7 @@ const configAuth = (app, userRepository) => {
                         message: USERNAME_IS_TAKEN_MESSAGE,
                     });
                 }
-                const newUser = new User(uuid.v1, email, username, password);
+                const newUser = new User(uuid.v1(), email, username, password);
                 return userRepository.addUser(newUser)
                     .then(() => {
                         done(null, newUser);

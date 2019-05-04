@@ -15,7 +15,7 @@ const attach = (app, messengerRepository) => {
         controller.addConnection(id, ws);
         const messenger = await controller.getMessenger(id, messengerRepository);
         ws.on('message', async (msg) => {
-            const message = new Message(uuid.v1, msg, req.user.username, new Date());
+            const message = new Message(uuid.v1(), msg, req.user.username, new Date());
             await controller.addMessage(id, message);
             controller
                 .addMessageToDatabase(id, messenger, messengerRepository, message);
