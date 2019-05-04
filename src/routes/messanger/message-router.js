@@ -15,8 +15,9 @@ const attach = (app, messengerRepository) => {
         controller.addConnection(id, ws);
         const messenger = await controller.getMessenger(id, messengerRepository);
         ws.on('message', async (msg) => {
-            const message = new Message(uuid.v1(), msg, req.user.username, new Date());
-            await controller.addMessage(id, message);
+            const message = new Message(uuid.v1(), req.user.id, msg, req.user.username, new Date());
+            const userId = req.user.id;
+            await controller.addMessage(id, message, userId);
             controller
                 .addMessageToDatabase(id, messenger, messengerRepository, message);
         });
@@ -27,8 +28,12 @@ const attach = (app, messengerRepository) => {
     });
 
     router.get('/messenger/:id', async (req, res) => {
+        if(!req.user) {
+            res.send('Unauthorized user');
+            return;
+        }
         const id = req.params.id;
-        const messages = await controller.getAllMesages(id, messengerRepository);
+        const messages = await controller.getAllMesages(id, messengerRepository, req.user.id);
         res.send(messages);
     });
 

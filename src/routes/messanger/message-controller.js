@@ -3,8 +3,14 @@ const Messenger = require('../../models/Messenger');
 const uuid = require('uuid');
 
 const controller = {
-    getAllMesages: async function(id, messengerRepository) {
+    getAllMesages: async function(id, messengerRepository, userId) {
         const messenger = await this.getMessenger(id, messengerRepository);
+        const messages = messenger.messages;
+        messages.forEach((messageObject) => {
+            return messageObject.isMine = (messageObject.userId === userId);
+        });
+
+        messenger.messages = messages;
         return messenger.messages;
     },
     getMessenger: async function(id, messengerRepository) {
@@ -34,10 +40,11 @@ const controller = {
     removeConnection: function(id, connection) {
         connections[id].splice(connections[id].indexOf(connection), 1);
     },
-    addMessage: async function(id, message) {
-        this.sendMessage(id, message);
+    addMessage: async function(id, message, userId) {
+        this.sendMessage(id, message, userId);
     },
-    sendMessage: function(id, messageObject) {
+    sendMessage: function(id, messageObject, userId) {
+        messageObject.isMine = (messageObject.userId === userId);
         const message = JSON.stringify(messageObject);
         connections[id].forEach((connection) => {
             connection.send(message);
