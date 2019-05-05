@@ -33,7 +33,7 @@ const configAuth = (app, userRepository) => {
         passReqToCallback: true,
     }, (req, username, password, done) => {
         const email = req.query.email;
-        const imageUrl = req.query.imageUrl;
+        const imageUrl = req.body.imageUrl;
 
         if (!email) {
             // This is the Login, because no e-mail is sent

@@ -25,9 +25,6 @@ const userRoute = require('./routes/users/user-route');
 const messageRoute = require('./routes/messanger/message-router');
 
 const start = (setupConfiguration) => {
-    app.use(bodyParser.urlencoded({ extended: true }));
-
-    //app.use(bodyParser.json());
     app.use(cookieParser('secret'));
     app.use(session({
         secret: sessionSecret,
@@ -38,6 +35,9 @@ const start = (setupConfiguration) => {
         },
     }));
     app.use(flash());
+    app.use(bodyParser.urlencoded({ extended: true }));
+
+    app.use(bodyParser.json());
 
     authConfig(app, userRepository);
     userRoute(app, userRepository);
