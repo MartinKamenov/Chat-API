@@ -33,6 +33,7 @@ const configAuth = (app, userRepository) => {
         passReqToCallback: true,
     }, (req, username, password, done) => {
         const email = req.query.email;
+        const imageUrl = req.query.imageUrl;
 
         if (!email) {
             // This is the Login, because no e-mail is sent
@@ -93,7 +94,7 @@ const configAuth = (app, userRepository) => {
                         message: USERNAME_IS_TAKEN_MESSAGE,
                     });
                 }
-                const newUser = new User(uuid.v1(), email, username, password);
+                const newUser = new User(uuid.v1(), email, username, password, imageUrl);
                 return userRepository.addUser(newUser)
                     .then(() => {
                         done(null, newUser);
