@@ -61,7 +61,7 @@ const configAuth = (app, userRepository) => {
         // const username = req.body.username;
         // const password = req.body.password;
         const repeatpassword = req.query.password_confirm;
-        if (!password || !username || !email || !repeatpassword) {
+        if (!password || !username || !email || !repeatpassword || !imageUrl) {
             return done(null, false, {
                 message: ALL_FIELDS_ARE_REQUIRED_MESSAGE,
             });
