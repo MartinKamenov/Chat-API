@@ -1,7 +1,9 @@
 const controller = {
-    showAllUsers: async function(userRepository) {
+    showAllUsers: async function(userRepository, userId) {
         const users = await userRepository.getAllUsers();
-        return users.map(user => { 
+        return users
+        .filter(user => userId !== user.id)
+        .map(user => { 
             return {
                 id: user.id,
                 username: user.username,

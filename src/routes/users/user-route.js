@@ -1,14 +1,24 @@
 const { Router } = require('express');
 const controller = require('./user-controller');
 const passport = require('passport');
+const constants = require('../../constants/constants');
 
 const attach = (app, userRepository) => {
     const router = new Router();
 
     router
         .get('/users', async (req, res) => {
-            const users = await controller.showAllUsers(userRepository);
-            res.send(users);
+            const user = req.user;
+            if(!user) {
+                res
+                    .status(constants.UNAUTHORIZED_STATUS_CODE)
+                    .send(constants.UNAUTHORIZED_USER_MESSAGE);
+                return;
+            }
+
+            const userId = user.id;
+            const users = await controller.showAllUsers(userRepository, userId);
+            res.status(constants.SUCCESS_STATUS_CODE).send(users);
         })
         .post('/login', passport.authenticate('local', { 
             successRedirect: '/auth/login/successfull',
@@ -22,16 +32,16 @@ const attach = (app, userRepository) => {
             failureFlash: true
         }))
         .get('/login/successfull', (req, res) => {
-            res.send('Successfull login');
+            res.status(constants.SUCCESS_STATUS_CODE).send('Successfull login');
         })
         .get('/register/successfull', (req, res) => {
-            res.send('Successfull register');
+            res.status(constants.SUCCESS_STATUS_CODE).send('Successfull register');
         })
         .get('/login/unsuccessfull', (req, res) => {
-            res.send('Unsuccessfull login');
+            res.status(constants.UNSUCCESS_STATUS_CODE).send('Unsuccessfull login');
         })
         .get('/register/unsuccessfull', (req, res) => {
-            res.send('Unsuccessfull register');
+            res.status(constants.UNSUCCESS_STATUS_CODE).send('Unsuccessfull register');
         });
 
     app.use('/auth', router);

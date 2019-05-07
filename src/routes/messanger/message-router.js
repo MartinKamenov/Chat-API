@@ -3,6 +3,7 @@ const controller = require('./message-controller');
 const { Router } = require('express');
 const Message = require('../../models/Message');
 const uuid = require('uuid');
+const constants = require('../../constants/constants');
 
 const attach = (app, messengerRepository) => {
     const router = new Router();
@@ -35,12 +36,14 @@ const attach = (app, messengerRepository) => {
 
     router.get('/messenger/:id', async (req, res) => {
         if(!req.user) {
-            res.send('Unauthorized user');
+            res
+                .status(constants.UNAUTHORIZED_STATUS_CODE)
+                .send(constants.UNAUTHORIZED_USER_MESSAGE);
             return;
         }
         const id = req.params.id;
         const messages = await controller.getAllMesages(id, messengerRepository, req.user.id);
-        res.send(messages);
+        res.status(constants.SUCCESS_STATUS_CODE).send(messages);
     });
 
     app.use('/', router);
