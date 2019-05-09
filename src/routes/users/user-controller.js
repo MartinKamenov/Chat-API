@@ -8,9 +8,13 @@ const controller = {
                 id: user.id,
                 username: user.username,
                 email: user.email,
-                imageUrl: user.imageUrl
+                imageUrl: user.imageUrl,
+                chatId: this.getChatId(userId, user.id)
             };
         });
+    },
+    getChatId: function(firstId, secondId) {
+        return firstId < secondId ? firstId + secondId : secondId + firstId;
     }
 };
 
