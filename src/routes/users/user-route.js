@@ -3,7 +3,7 @@ const controller = require('./user-controller');
 const passport = require('passport');
 const constants = require('../../constants/constants');
 
-const attach = (app, userRepository) => {
+const attach = (app, userRepository, messengerRepository) => {
     const router = new Router();
 
     router
@@ -17,7 +17,7 @@ const attach = (app, userRepository) => {
             }
 
             const userId = user.id;
-            const users = await controller.showAllUsers(userRepository, userId);
+            const users = await controller.showAllUsers(userRepository, messengerRepository, userId);
             res.status(constants.SUCCESS_STATUS_CODE).send(users);
         })
         .post('/login', passport.authenticate('local', { 

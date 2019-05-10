@@ -40,7 +40,7 @@ const start = (setupConfiguration) => {
     app.use(bodyParser.json());
 
     authConfig(app, userRepository);
-    userRoute(app, userRepository);
+    userRoute(app, userRepository, messengerRepository);
     messageRoute(app, messengerRepository);
 
     app.listen(setupConfiguration.port, setupConfiguration.startCallback());
