@@ -1,3 +1,6 @@
+const Message = require('../../models/Message');
+const uuid = require('uuid');
+
 const controller = {
     showAllUsers: async function(userRepository, messengerRepository, userId) {
         const users = await userRepository.getAllUsers();
@@ -24,7 +27,7 @@ const controller = {
     getLastMessage: function(messengers, chatId) {
         const messenger = messengers.find((messenger) => messenger.id === chatId);
         if(!messenger || !messenger.messages.length) {
-            return 'No messages';
+            return new Message(uuid.v1(), '', 'No messages', '', '', new Date());
         }
         
         const messages = messenger.messages;
