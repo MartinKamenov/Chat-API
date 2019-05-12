@@ -1,5 +1,5 @@
 const pagingConstants = {
-    defaultPage: 0,
+    defaultPage: 1,
     defaultPageSize: 10
 };
 
