@@ -1,17 +1,28 @@
 let connections = {};
 const Messenger = require('../../models/Messenger');
-const uuid = require('uuid');
+const paging = require('../../services/paging');
+const pagingConstants = require('../../constants/pagingConstants');
 
 const controller = {
-    getAllMesages: async function(id, messengerRepository, userId) {
+    getMesagesFromPage: async function(id, messengerRepository, userId, page) {
         const messenger = await this.getMessenger(id, messengerRepository);
-        const messages = messenger.messages;
+        let messages = messenger.messages;
         messages.forEach((messageObject) => {
             return messageObject.isMine = (messageObject.userId === userId);
         });
 
+        const messageObject = paging.getPagingOptions(messages, page, pagingConstants.defaultPageSize);
+        messages.reverse();
         messenger.messages = messages;
-        return messenger.messages;
+        messages = paging.getCollectionPage(messages, page, pagingConstants.defaultPageSize);
+        messages.reverse();
+        return {
+            messages,
+            pagesCount: messageObject.pagesCount,
+            count: messageObject.count,
+            page: messageObject.page,
+            pageSize: messageObject.pageSize
+        };
     },
     getMessenger: async function(id, messengerRepository) {
         const messengers = await messengerRepository.findMessengerById(id);

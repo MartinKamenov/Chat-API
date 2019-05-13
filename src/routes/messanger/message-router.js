@@ -4,6 +4,7 @@ const { Router } = require('express');
 const Message = require('../../models/Message');
 const uuid = require('uuid');
 const constants = require('../../constants/constants');
+const pagingConstants = require('../../constants/pagingConstants');
 
 const attach = (app, messengerRepository) => {
     const router = new Router();
@@ -41,9 +42,17 @@ const attach = (app, messengerRepository) => {
                 .send(constants.UNAUTHORIZED_USER_MESSAGE);
             return;
         }
+        
+        let page = req.query.page;
+        if(!page) {
+            page = pagingConstants.defaultPage;
+        }
+        page = parseInt(page, 10);
+
         const id = req.params.id;
-        const messages = await controller.getAllMesages(id, messengerRepository, req.user.id);
-        res.status(constants.SUCCESS_STATUS_CODE).send(messages);
+        const messageObject = await controller
+            .getMesagesFromPage(id, messengerRepository, req.user.id, page);
+        res.status(constants.SUCCESS_STATUS_CODE).send(messageObject);
     });
 
     app.use('/', router);
