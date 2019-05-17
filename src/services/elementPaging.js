@@ -1,13 +1,11 @@
 const elementPaging = {
-    getCollectionPage(collection, firstElement, pageSize) {
+    getCollectionPage(collection, firstElementId, pageSize) {
         if(!pageSize) {
             pageSize = pagingConstants.defaultPageSize;
         }
 
+        const firstElement = collection.find((c) => c.id === firstElementId);
         let firstIndex = collection.indexOf(firstElement);
-        if(firstIndex === -1) {
-            firstIndex = 0;
-        }
 
         let lastIndex = firstIndex + pageSize;
         if(lastIndex > collection.length) {
@@ -17,22 +15,30 @@ const elementPaging = {
         return collection.filter((c, i) => (i >= firstIndex) && (i < lastIndex));
     },
 
-    getPagingOptions(collection, firstElement, pageSize) {
+    getPagingOptions(collection, firstElementId, pageSize) {
         if(!pageSize) {
             pageSize = pagingConstants.defaultPageSize;
         }
 
         const count = collection.length;
-        const pagesCount = Math.ceil(count / pageSize);
-        const firstIndex = collection.indexOf(firstElement);
-        const lastElement = firstIndex !== -1 ? (firstElement + pageSize) : (pageSize);
 
+        const firstElement = collection.find((c) => c.id === firstElementId);
+        let firstIndex = collection.indexOf(firstElement);
+
+        const lastMessageIndex = firstIndex + pageSize < count ? (firstIndex + pageSize) : count - 1;
+        
+        const isLastMessagePage = (lastMessageIndex === count - 1);
+        let lastMessageId = '';
+        if(lastMessageIndex > 0) {
+            lastMessageId = collection[lastMessageIndex].id;
+        }
+        
         return {
             pageSize,
-            pagesCount,
             count,
-            lastElement
-        };
+            lastMessageId,
+            isLastMessagePage
+        }
     }
 };
 

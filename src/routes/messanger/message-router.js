@@ -43,15 +43,11 @@ const attach = (app, messengerRepository) => {
             return;
         }
         
-        let page = req.query.page;
-        if(!page) {
-            page = pagingConstants.defaultPage;
-        }
-        page = parseInt(page, 10);
+        let lastMessageId = req.query.messageId;
 
         const id = req.params.id;
         const messageObject = await controller
-            .getMesagesFromPage(id, messengerRepository, req.user.id, page);
+            .getMesagesFromPage(id, messengerRepository, req.user.id, lastMessageId);
         res.status(constants.SUCCESS_STATUS_CODE).send(messageObject);
     });
 
