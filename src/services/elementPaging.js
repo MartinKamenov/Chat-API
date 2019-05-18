@@ -27,7 +27,7 @@ const elementPaging = {
         let firstIndex = collection.indexOf(firstElement);
         firstIndex = firstIndex !== -1 ? firstIndex + 1 : 0;
 
-        const lastMessageIndex = firstIndex + pageSize < count ? (firstIndex + pageSize) : count - 1;
+        const lastMessageIndex = firstIndex + pageSize < count ? (firstIndex + pageSize) - 1 : count - 1;
         
         const isLastMessagePage = (lastMessageIndex === count - 1);
         let lastMessageId = '';

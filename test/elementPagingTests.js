@@ -17,6 +17,20 @@ describe('Element paging', function () {
         assert.deepEqual(pagedElements, elements.slice(0, defaultPageSize));
     });
 
+    it('should return pagingOptions correctly when no last element id is passed', function () {
+        // Arrange & Act
+        const pageOptions = elementPaging.getPagingOptions(elements, '', defaultPageSize);
+        // Assert
+        assert.deepEqual(pageOptions,
+            {
+                isLastMessagePage: false,
+                pageSize: defaultPageSize,
+                lastMessageId: '9',
+                count: 40
+            }
+        );
+    });
+
     it('should return correct page correctly when last element id is passed', function () {
         // Arrange & Act
         const pagedElements = elementPaging.getCollectionPage(elements, '9', defaultPageSize);
@@ -25,10 +39,38 @@ describe('Element paging', function () {
             elements.slice(10, 20));
     });
 
+    it('should return pagingOptions correctly when last element id is passed', function () {
+        // Arrange & Act
+        const pageOptions = elementPaging.getPagingOptions(elements, '9', defaultPageSize);
+        // Assert
+        assert.deepEqual(pageOptions,
+            {
+                isLastMessagePage: false,
+                pageSize: defaultPageSize,
+                lastMessageId: '19',
+                count: 40
+            }
+        );
+    });
+
     it('should return correct page from last elements correctly when id is passed', function () {
         // Arrange & Act
         const pagedElements = elementPaging.getCollectionPage(elements, '35', defaultPageSize);
         // Assert
         assert.deepEqual(pagedElements, elements.slice(36, 40));
+    });
+
+    it('should return pagingOptions correctly when last element id is one of the last ones', function () {
+        // Arrange & Act
+        const pageOptions = elementPaging.getPagingOptions(elements, '35', defaultPageSize);
+        // Assert
+        assert.deepEqual(pageOptions,
+            {
+                isLastMessagePage: true,
+                pageSize: defaultPageSize,
+                lastMessageId: '39',
+                count: 40
+            }
+        );
     });
 });
