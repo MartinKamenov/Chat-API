@@ -6,10 +6,11 @@ const elementPaging = {
 
         const firstElement = collection.find((c) => c.id === firstElementId);
         let firstIndex = collection.indexOf(firstElement);
+        firstIndex = firstIndex !== -1 ? firstIndex : 0;
 
         let lastIndex = firstIndex + pageSize;
-        if(lastIndex > collection.length) {
-            lastIndex = collection.length;
+        if(lastIndex > collection.length - 1) {
+            lastIndex = collection.length - 1;
         }
 
         return collection.filter((c, i) => (i >= firstIndex) && (i < lastIndex));
@@ -24,6 +25,7 @@ const elementPaging = {
 
         const firstElement = collection.find((c) => c.id === firstElementId);
         let firstIndex = collection.indexOf(firstElement);
+        firstIndex = firstIndex !== -1 ? firstIndex : 0;
 
         const lastMessageIndex = firstIndex + pageSize < count ? (firstIndex + pageSize) : count - 1;
         

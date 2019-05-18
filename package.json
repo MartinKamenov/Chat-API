@@ -29,12 +29,17 @@
     "uuid": "^3.3.2",
     "ws": "^6.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  },
   "scripts": {
     "start": "nodemon ./src/server.js",
     "lint": "eslint ./src",
     "lintfix": "eslint ./src --fix",
-    "test": "test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
