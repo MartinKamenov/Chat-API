@@ -14,20 +14,21 @@ describe('Element paging', function () {
         // Arrange & Act
         const pagedElements = elementPaging.getCollectionPage(elements, '', defaultPageSize);
         // Assert
-        assert.deepEqual(elements.slice(0, defaultPageSize), pagedElements);
+        assert.deepEqual(pagedElements, elements.slice(0, defaultPageSize));
     });
 
     it('should return correct page correctly when last element id is passed', function () {
         // Arrange & Act
         const pagedElements = elementPaging.getCollectionPage(elements, '9', defaultPageSize);
         // Assert
-        assert.deepEqual(elements.slice(defaultPageSize, defaultPageSize + defaultPageSize), pagedElements);
+        assert.deepEqual(pagedElements, 
+            elements.slice(10, 20));
     });
 
     it('should return correct page from last elements correctly when id is passed', function () {
         // Arrange & Act
         const pagedElements = elementPaging.getCollectionPage(elements, '35', defaultPageSize);
         // Assert
-        assert.deepEqual(elements.slice(35, 40), pagedElements);
+        assert.deepEqual(pagedElements, elements.slice(36, 40));
     });
 });
