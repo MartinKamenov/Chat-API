@@ -24,8 +24,11 @@ const attach = (app, userRepository, messengerRepository) => {
             successRedirect: '/auth/login/successfull',
             failureRedirect: '/auth/login/unsuccessfull',
             failureFlash: true
+        }))
+        .post('logout', (req, res) => {
+            const result = controller.logout();
+            res.status(constants.SUCCESS_STATUS_CODE).send(result);
         })
-        )
         .post('/register', passport.authenticate('local', {
             successRedirect: '/auth/register/successfull',
             failureRedirect: '/auth/register/unsuccessfull',

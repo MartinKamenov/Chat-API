@@ -1,5 +1,6 @@
 const Message = require('../../models/Message');
 const uuid = require('uuid');
+const constants = require('../../constants/constants');
 
 const controller = {
     showAllUsers: async function(userRepository, messengerRepository, userId) {
@@ -32,7 +33,11 @@ const controller = {
         
         const messages = messenger.messages;
         return messages[messages.length - 1];
-    }
+    },
+    logout: function(req) {
+        req.logout();
+        return constants.SUCCESSFULL_LOGOUT_MESSAGE;
+    },
 };
 
 module.exports = controller;
