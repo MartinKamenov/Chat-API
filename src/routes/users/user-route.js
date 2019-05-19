@@ -25,7 +25,7 @@ const attach = (app, userRepository, messengerRepository) => {
             failureRedirect: '/auth/login/unsuccessfull',
             failureFlash: true
         }))
-        .post('logout', (req, res) => {
+        .post('/logout', (req, res) => {
             const result = controller.logout();
             res.status(constants.SUCCESS_STATUS_CODE).send(result);
         })
