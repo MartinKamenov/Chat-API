@@ -26,7 +26,7 @@ const attach = (app, userRepository, messengerRepository) => {
             failureFlash: true
         }))
         .post('/logout', (req, res) => {
-            const result = controller.logout();
+            const result = controller.logout(req);
             res.status(constants.SUCCESS_STATUS_CODE).send(result);
         })
         .post('/register', passport.authenticate('local', {
