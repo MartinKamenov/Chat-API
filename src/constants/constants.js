@@ -4,7 +4,7 @@ const constants = {
     SUCCESS_STATUS_CODE: 200,
     UNSUCCESS_STATUS_CODE: 400,
     NOT_FOUND_STATUS_CODE: 404,
-    SUCCESSFULL_LOGOUT_MESSAGE: 'Seccessfull logout'
+    SUCCESSFULL_LOGOUT_MESSAGE: 'Successfull logout'
 };
 
 module.exports = constants;
