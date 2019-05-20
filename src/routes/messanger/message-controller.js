@@ -51,8 +51,9 @@ const controller = {
         this.sendMessage(id, message, userId);
     },
     sendMessage: function(id, messageObject, userId) {
-        messageObject.isMine = (messageObject.userId === userId);
-        const message = JSON.stringify(messageObject);
+        const copyOfMessage = Object.assign({}, messageObject); 
+        copyOfMessage.isMine = (copyOfMessage.userId === userId);
+        const message = JSON.stringify(copyOfMessage);
         connections[id].forEach((connection) => {
             connection.send(message);
         });
