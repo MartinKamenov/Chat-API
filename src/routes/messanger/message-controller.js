@@ -47,7 +47,7 @@ const controller = {
     removeConnection: function(id, connection) {
         connections[id].splice(connections[id].indexOf(connection), 1);
     },
-    addMessage: async function(id, message, userId) {
+    addMessage: function(id, message, userId) {
         this.sendMessage(id, message, userId);
     },
     sendMessage: function(id, messageObject, userId) {

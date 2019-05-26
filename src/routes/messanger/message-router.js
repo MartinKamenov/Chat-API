@@ -25,7 +25,7 @@ const attach = (app, messengerRepository) => {
                 req.user.imageUrl,
                 new Date());
             const userId = req.user.id;
-            await controller.addMessage(id, message, userId);
+            controller.addMessage(id, message, userId);
             controller
                 .addMessageToDatabase(id, messenger, messengerRepository, message);
         });
